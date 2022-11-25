@@ -1,0 +1,53 @@
+version: '3.0'
+
+services:
+
+  database:
+    container_name: database
+    restart: unless-stopped
+    image: mariadb:10.9.3
+    volumes:
+      - "./volumes/mariadb:/var/lib/mysql"
+    environment:
+      MARIADB_ROOT_PASSWORD: rootpassword
+      MARIADB_DATABASE: serverbanner
+    ports:
+      - "3306:3306"
+
+  files-webserver:
+    container_name: files-webserver
+    restart: unless-stopped
+    image: webdevops/php-apache:8.0
+    volumes:
+      - "./volumes/files:/app"
+    ports:
+      - "80:80"
+    depends_on:
+      - database
+
+  # adminpage-backend:
+  #   container_name: adminpage-backend
+  #   restart: unless-stopped
+  #   image: openjdk:17.0.2-jdk
+  #   volumes:
+  #     - "./backend:/opt/backend"
+  #   ports:
+  #     - "8081:8080"
+  #   command: ["java","-jar","backend.jar"]
+  #   depends_on:
+  #     - database
+
+  # adminpage-webserver:
+  #   container_name: adminpage-webserver
+  #   restart: unless-stopped
+  #   image: httpd:2.4.54
+  #   volumes:
+  #     - "./volumes/frontend:/usr/local/apache2/htdocs/"
+  #   ports:
+  #    - "81:80"
+  #   depends_on:
+  #     - database
+  #     - adminpage-backend
+
+
+
