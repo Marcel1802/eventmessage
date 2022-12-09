@@ -1,2 +1,4 @@
 volumes/mariadb/*
 .vscode
+volumes/frontend/*
+volumes/backend/*
