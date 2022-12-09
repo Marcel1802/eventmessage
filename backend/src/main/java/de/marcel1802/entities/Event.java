@@ -1,10 +1,9 @@
 package de.marcel1802.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
-import javax.json.bind.annotation.JsonbDateFormat;
-import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,8 +21,8 @@ public class Event extends PanacheEntityBase {
 
 	private String name;
 
-	// TODO: fix time format
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSSSSS", timezone = "Europe/Berlin")
+	// Format "yyyy-MM-dd HH:mm:ss.SSSSSS")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
 	private LocalDateTime date;
 
 	// TODO: tinyint (2) / `deleted` tinyint(4) DEFAULT NULL / BIT (1) in DB
@@ -32,8 +31,7 @@ public class Event extends PanacheEntityBase {
 	public Event() {
 	}
 
-	public Event(int id, String name, LocalDateTime date) {
-		this.id = id;
+	public Event(String name, LocalDateTime date) {
 		this.name = name;
 		this.date = date;
 		this.deleted = false;
@@ -69,5 +67,15 @@ public class Event extends PanacheEntityBase {
 
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
+	}
+
+	@Override
+	public String toString() {
+		return "Event{" +
+			"id=" + id +
+			", name='" + name + '\'' +
+			", date=" + date +
+			", deleted=" + deleted +
+			'}';
 	}
 }
