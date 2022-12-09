@@ -30,29 +30,30 @@ services:
     depends_on:
       - database
 
-  # adminpage-backend:
-  #   container_name: adminpage-backend
-  #   restart: unless-stopped
-  #   image: openjdk:17.0.2-jdk
-  #   volumes:
-  #     - "./backend:/opt/backend"
-  #   ports:
-  #     - "8081:8080"
-  #   command: ["java","-jar","backend.jar"]
-  #   depends_on:
-  #     - database
+  adminpage-backend:
+    container_name: adminpage-backend
+    restart: unless-stopped
+    image: openjdk:17.0.2-jdk
+    volumes:
+      - "./volumes/backend:/opt/backend"
+    ports:
+      - "8081:8080"
+    working_dir: /opt/backend
+    command: ["java","-jar","backend.jar"]
+    depends_on:
+      - database
 
-  # adminpage-webserver:
-  #   container_name: adminpage-webserver
-  #   restart: unless-stopped
-  #   image: httpd:2.4.54
-  #   volumes:
-  #     - "./volumes/frontend:/usr/local/apache2/htdocs/"
-  #   ports:
-  #    - "81:80"
-  #   depends_on:
-  #     - database
-  #     - adminpage-backend
+  adminpage-webserver:
+    container_name: adminpage-webserver
+    restart: unless-stopped
+    image: httpd:2.4.54
+    volumes:
+      - "./volumes/frontend:/usr/local/apache2/htdocs/"
+    ports:
+     - "81:80"
+    depends_on:
+      - database
+      - adminpage-backend
 
 
 
