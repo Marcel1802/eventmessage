@@ -7,6 +7,7 @@ import de.marcel1802.entities.ResponseMessage;
 import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.core.Response;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @ApplicationScoped
@@ -14,6 +15,18 @@ public class EventService {
 
 	public Response getAllEvents() {
 		List<Event> allEvents = Event.findAll().list();
+		if (allEvents.isEmpty()) return Response.status(204).build();
+		return Response.status(200).entity(allEvents).build();
+	}
+
+	public Response getIncomingEvents() {
+		List<Event> allEvents = Event.find("date > ?1", LocalDateTime.now()).list();
+		if (allEvents.isEmpty()) return Response.status(204).build();
+		return Response.status(200).entity(allEvents).build();
+	}
+
+	public Response getOldEvents() {
+		List<Event> allEvents = Event.find("date < ?1", LocalDateTime.now()).list();
 		if (allEvents.isEmpty()) return Response.status(204).build();
 		return Response.status(200).entity(allEvents).build();
 	}

@@ -26,6 +26,18 @@ public class EventRest {
 		return eventService.getAllEvents();
 	}
 
+	@GET
+	@Path("events/incoming")
+	public Response getIncomingEvents() {
+		return eventService.getIncomingEvents();
+	}
+
+	@GET
+	@Path("events/old")
+	public Response getOldEvents() {
+		return eventService.getOldEvents();
+	}
+
 	@Transactional
 	@POST
 	@Path("event")
