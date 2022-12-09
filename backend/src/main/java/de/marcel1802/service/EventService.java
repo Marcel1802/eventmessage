@@ -14,19 +14,19 @@ import java.util.List;
 public class EventService {
 
 	public Response getAllEvents() {
-		List<Event> allEvents = Event.findAll().list();
+		List<Event> allEvents = Event.find("deleted = false").list();
 		if (allEvents.isEmpty()) return Response.status(204).build();
 		return Response.status(200).entity(allEvents).build();
 	}
 
 	public Response getIncomingEvents() {
-		List<Event> allEvents = Event.find("date > ?1", LocalDateTime.now()).list();
+		List<Event> allEvents = Event.find("date > ?1 AND deleted = false", LocalDateTime.now()).list();
 		if (allEvents.isEmpty()) return Response.status(204).build();
 		return Response.status(200).entity(allEvents).build();
 	}
 
 	public Response getOldEvents() {
-		List<Event> allEvents = Event.find("date < ?1", LocalDateTime.now()).list();
+		List<Event> allEvents = Event.find("date < ?1 AND deleted = false", LocalDateTime.now()).list();
 		if (allEvents.isEmpty()) return Response.status(204).build();
 		return Response.status(200).entity(allEvents).build();
 	}
