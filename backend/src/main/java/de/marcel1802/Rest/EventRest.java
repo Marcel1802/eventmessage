@@ -1,4 +1,4 @@
-package de.marcel1802.Rest;
+package de.marcel1802.rest;
 
 import de.marcel1802.entities.Event;
 import de.marcel1802.entities.EventDTO;
